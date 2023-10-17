@@ -1,0 +1,6 @@
+# .eslintignore
+
+# Ignore the src/hooks directory
+/src/hooks/
+/src/models/
+/src/client.ts
