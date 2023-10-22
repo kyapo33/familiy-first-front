@@ -1,45 +1,34 @@
-import axios from 'axios';
+import axios, { AxiosInstance, AxiosResponse } from 'axios';
 
-import type { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
-
-/**
- * Subset of AxiosRequestConfig
- */
-export type RequestConfig<TData = unknown> = {
-  url?: string;
-  method: 'get' | 'put' | 'patch' | 'post' | 'delete';
-  params?: unknown;
-  data?: TData;
-  responseType?: 'arraybuffer' | 'blob' | 'document' | 'json' | 'text' | 'stream';
-  signal?: AbortSignal;
-  headers?: AxiosRequestConfig['headers'];
-};
-/**
- * Subset of AxiosResponse
- */
-export type ResponseConfig<TData = unknown> = {
-  data: TData;
-  status: number;
-  statusText: string;
-  headers?: AxiosResponse['headers'];
-};
-
-export const axiosInstance = axios.create({
-  baseURL: process.env['AXIOS_BASE'],
+// Create a new Axios instance with your desired configuration
+const axiosClient: AxiosInstance = axios.create({
+  baseURL: process.env.REACT_APP_AXIOS_BASE, // Replace with your API base URL
   headers: {
-    ...('{}' ? JSON.parse('{}') : {}),
-    Authorization: localStorage.getItem('token')
+    'Content-Type': 'application/json', // Add default headers (optional)
+    Authorization: localStorage.getItem('token') ?? undefined
   }
 });
 
-export const axiosClient = async <TData, TError = unknown, TVariables = unknown>(
-  config: RequestConfig<TVariables>
-): Promise<ResponseConfig<TData>> => {
-  const promise = axiosInstance.request<TData, ResponseConfig<TData>>({ ...config }).catch((e: AxiosError<TError>) => {
-    throw e;
-  });
+// Add request interceptor (optional)
+axiosClient.interceptors.request.use(
+  (config) => {
+    // You can modify the request config here, e.g., add authentication headers
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
-  return promise;
-};
+// Add response interceptor (optional)
+axiosClient.interceptors.response.use(
+  (response: AxiosResponse) => {
+    // You can modify the response data here
+    return response;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
 export default axiosClient;
