@@ -12,9 +12,9 @@ const Layout: FC = () => {
     }
   };
 
-  useEffect(() => {
-    checkUser();
-  }, []);
+  // useEffect(() => {
+  //   checkUser();
+  // }, []);
 
   return <div>bla</div>;
 };
