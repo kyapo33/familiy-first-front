@@ -1,23 +1,28 @@
 import { RoutesPath } from './Paths';
 import SignUp from '../modules/signup/SignUp';
 import { RouteObject } from 'react-router';
-// import News from '../modules/news/news';
-// import Layout from '../modules/layout/Layout';
+import Layout from '../modules/layout/Layout';
+import News from '../modules/news/news';
 
 export const Routes: RouteObject[] = [
   {
-    path: '/',
+    path: RoutesPath.Signup,
     element: <SignUp />,
     children: []
+  },
+  {
+    path: RoutesPath.Signup,
+    element: <SignUp />,
+    children: []
+  },
+  {
+    path: '',
+    element: <Layout />,
+    children: [
+      {
+        path: RoutesPath.News,
+        element: <News />
+      }
+    ]
   }
-  // {
-  //   path: '',
-  //   element: Layout,
-  //   children: [
-  //     {
-  //       path: "",
-  //       element: News,
-  //     },
-  //   ],
-  // },
 ];

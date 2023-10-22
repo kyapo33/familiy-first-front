@@ -5,8 +5,6 @@ export const getCurrentDateInFormat = () => {
   const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed, so add 1
   const day = String(currentDate.getDate()).padStart(2, '0');
 
-  console.log(`${day}/${month}/${year}`);
-
   return `${day}/${month}/${year}`;
 };
 
@@ -40,4 +38,22 @@ export const compareDates = (dateString1: DateString, dateString2: DateString): 
   } else {
     return 0; // Both dates are the same
   }
+};
+
+export const convertToISODate = (inputDate: string): string | null => {
+  // Split the input date string into day, month, and year components
+  const [day, month, year] = inputDate.split('/');
+
+  // Create a new Date object (note that months are 0-based in JavaScript)
+  const date = new Date(parseInt(year), parseInt(month) - 1, parseInt(day) + 1); // Subtract 1 from the month to make it 0-based
+
+  // Check if the date is valid
+  if (isNaN(date.getTime())) {
+    return null; // Invalid date
+  }
+
+  // Get the ISO 8601 date string
+  const isoDate = date.toISOString();
+
+  return isoDate;
 };

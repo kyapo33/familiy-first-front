@@ -1,46 +1,24 @@
-import { toFormikValidationSchema } from 'zod-formik-adapter';
-import PersonalDetails from './form/fields/PersonalDetails';
-import ContactDetails from './form/fields/ContactDetails';
-import PasswordDetails from './form/fields/PasswordDetails';
-import { ContactDetailsSchema, PersonalDetailsSchema, passwordSchema } from './form/fields/ValidationSchemas';
-import MultiStepForm from '../../components/form/MultiStepForm/MultiStepForm';
 import { SignUpInputDto } from '../../../schemas/Interfaces';
-import React, { FC } from 'react';
-import { getCurrentDateInFormat } from './SignUpFormHelper';
+import { FC } from 'react';
 import { Stack } from '@mui/joy';
+import { useSignUpForm } from './useSignUpForm';
+import MultiStepForm from '../../../components/form/MultiStepForm/MultiStepForm';
+import { Backdrop, CircularProgress } from '@mui/material';
 
 const SignUpForm: FC = () => {
-  const steps = [
-    {
-      component: PersonalDetails,
-      validationSchema: toFormikValidationSchema(PersonalDetailsSchema)
-    },
-    {
-      component: ContactDetails,
-      validationSchema: toFormikValidationSchema(ContactDetailsSchema)
-    },
-    {
-      component: PasswordDetails,
-      validationSchema: toFormikValidationSchema(passwordSchema)
-    }
-  ];
-
-  const initialValues = {
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-    birthdate: ''
-  };
+  const { onSubmit, steps, initialValues, loading } = useSignUpForm();
 
   return (
-    <Stack height="100vh" width="100vw">
+    <>
+      <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} open={loading}>
+        <CircularProgress color="primary" />
+      </Backdrop>
       <MultiStepForm<SignUpInputDto>
         initialValues={initialValues}
-        handleSubmit={(values) => console.log(values)}
+        handleSubmit={(values) => onSubmit(values)}
         steps={steps}
       />
-    </Stack>
+    </>
   );
 };
 

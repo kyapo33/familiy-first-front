@@ -1,8 +1,8 @@
 import { FormikErrors, FormikHandlers, FormikValues } from 'formik';
 import { SignUpInputDto } from '../../../../../schemas/Interfaces';
 import { FC } from 'react';
-import InputField from '../../../../components/form/fields/input/InputField';
 import { Box, Stack, Typography } from '@mui/joy';
+import InputField from '../../../../../components/form/fields/input/InputField';
 
 interface PasswordDetailsProps {
   errors: FormikErrors<SignUpInputDto>;

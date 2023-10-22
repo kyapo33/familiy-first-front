@@ -1,8 +1,8 @@
 import { FormikErrors, FormikHandlers, FormikValues } from 'formik';
 import { FC } from 'react';
 import { SignUpInputDto } from '../../../../../schemas/Interfaces';
-import InputField from '../../../../components/form/fields/input/InputField';
 import { Box, Typography, Grid, Stack } from '@mui/joy';
+import InputField from '../../../../../components/form/fields/input/InputField';
 
 interface PersonalDetailsProps {
   errors: FormikErrors<SignUpInputDto>;
@@ -11,7 +11,6 @@ interface PersonalDetailsProps {
 }
 
 const PersonalDetails: FC<PersonalDetailsProps> = ({ errors, values, handleChange }) => {
-  console.log(errors);
   return (
     <Box>
       <Box>

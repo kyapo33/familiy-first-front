@@ -14,32 +14,22 @@ import '@fontsource/inter';
 import SafeAreaView from './modules/mobile/safe-area/SafeAreaView';
 
 const App: FC = () => {
-  const mantineTheme = extendTheme({
-    fontFamily: {
-      body: 'Roboto, sans-serif'
-    }
-  });
-
   const queryClient = new QueryClient();
 
   return (
     <SafeAreaView>
-      <CssVarsProvider theme={mantineTheme}>
-        <QueryClientProvider client={queryClient}>
-          <BrowserRouter>
-            <Routes>
-              {AppRoutes.map((route, index: number) => (
-                <Route key={index} path={route.path} element={route.element}>
-                  {route.children &&
-                    route.children.map((child, index) => (
-                      <Route key={index} path={child.path} element={child.element} />
-                    ))}
-                </Route>
-              ))}
-            </Routes>
-          </BrowserRouter>
-        </QueryClientProvider>
-      </CssVarsProvider>
+      <QueryClientProvider client={queryClient}>
+        <BrowserRouter>
+          <Routes>
+            {AppRoutes.map((route, index: number) => (
+              <Route key={index} path={route.path} element={route.element}>
+                {route.children &&
+                  route.children.map((child, index) => <Route key={index} path={child.path} element={child.element} />)}
+              </Route>
+            ))}
+          </Routes>
+        </BrowserRouter>
+      </QueryClientProvider>
     </SafeAreaView>
   );
 };
