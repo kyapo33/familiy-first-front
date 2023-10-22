@@ -4,7 +4,7 @@ import { Stack } from '@mui/joy';
 
 const SignUp: FC = () => {
   return (
-    <Stack height="100vh" width="100vw">
+    <Stack height="100%" width="100%" paddingTop="16px">
       <SignUpForm />
     </Stack>
   );

@@ -44,7 +44,7 @@ const InputField: FC<InputProps & { errorMessage: string | undefined; helperText
           '--Input-radius': '6px'
         }}
       />
-      {helperText && !error && (
+      {helperText && (
         <Stack alignItems="flex-start" component={FormHelperText} fontSize="12px" paddingTop="5px">
           {helperText}
         </Stack>

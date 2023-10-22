@@ -14,11 +14,11 @@ const PasswordDetails: FC<PasswordDetailsProps> = ({ errors, values, handleChang
   return (
     <Box>
       <Box>
-        <Stack component={Typography} fontSize="20px" level="h4">
+        <Stack component={Typography} fontSize="23px" level="h4">
           Mot de passe
         </Stack>
         <br />
-        <Stack component={Typography} fontSize="12px" level="body-md">
+        <Stack component={Typography} fontSize="15px" level="body-md">
           Choisissez un mot de passe qui répond aux critères suivants : <br />
           Le mot de passe doit contenir au moins 6 caractères, qui peuvent être des lettres ou des chiffres. <br />
           Il doit également inclure au moins 1 chiffre, 1 lettre majuscule et 1 caractère spécial. <br />

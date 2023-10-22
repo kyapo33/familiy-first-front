@@ -14,11 +14,11 @@ const PersonalDetails: FC<PersonalDetailsProps> = ({ errors, values, handleChang
   return (
     <Box>
       <Box>
-        <Stack fontSize="20px" component={Typography} level="h4">
+        <Stack fontSize="23px" component={Typography} level="h4">
           Informations personnelles
         </Stack>
         <br />
-        <Stack fontSize="12px" lineHeight="1.3em" component={Typography} level="body-md">
+        <Stack fontSize="15px" lineHeight="1.3em" component={Typography} level="body-md">
           Indiquez votre nom de tous les jours et votre date de naissance.
         </Stack>
         <br />

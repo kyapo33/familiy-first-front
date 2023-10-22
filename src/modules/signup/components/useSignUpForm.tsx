@@ -53,5 +53,5 @@ export const useSignUpForm = () => {
     birthdate: ''
   };
 
-  return { onSubmit, steps, initialValues, loading: signUpMutation.isPending };
+  return { onSubmit, steps, initialValues, loading: signUpMutation.isPending, error: signUpMutation.error };
 };

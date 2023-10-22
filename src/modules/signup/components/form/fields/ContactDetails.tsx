@@ -14,11 +14,11 @@ const ContactDetails: FC<ContactDetailsProps> = ({ errors, values, handleChange 
   return (
     <Box>
       <Box>
-        <Stack component={Typography} fontSize="20px" level="h4">
+        <Stack component={Typography} fontSize="23px" level="h4">
           Informations de contact
         </Stack>
         <br />
-        <Stack component={Typography} fontSize="12px" level="body-md">
+        <Stack component={Typography} fontSize="15px" level="body-md">
           Veuillez indiquer votre adresse e-mail. <br />
           Le numéro de téléphone portable n'est pas obligatoire. <br />
           Si vous le renseignez, il pourra être consulté par les autres membres de votre famille
