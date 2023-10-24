@@ -1,23 +1,33 @@
-import { FC, useEffect, useCallback } from 'react';
+import { FC, useEffect, useCallback, useState } from 'react';
 import { Preferences } from '@capacitor/preferences';
 import { RoutesPath } from '../../routes/Paths';
 import { useNavigate } from 'react-router';
+import { useUserStore } from '../../assets/store/UserStore';
+import { GetUserModelDto } from '../../schemas/Interfaces';
 
 const Layout: FC = () => {
+  const { user, setUser } = useUserStore();
   const navigate = useNavigate();
 
   const checkUser = useCallback(async () => {
-    const { value } = await Preferences.get({ key: 'token' });
+    const { value } = await Preferences.get({ key: 'user' });
     if (!value) {
-      navigate(RoutesPath.Signup);
+      navigate(RoutesPath.Login);
+      return;
     }
-  }, [navigate]);
+    const newUser: GetUserModelDto = JSON.parse(value);
+    setUser({ ...newUser });
+  }, [navigate, setUser]);
 
   useEffect(() => {
     checkUser();
   }, [checkUser]);
 
-  return <div>bla</div>;
+  if (!user || !user?.id) {
+    return null;
+  }
+
+  return <div>{JSON.stringify(user)}</div>;
 };
 
 export default Layout;

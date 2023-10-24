@@ -9,25 +9,33 @@ import PersonalDetails from './form/fields/PersonalDetails';
 import { PersonalDetailsSchema, ContactDetailsSchema, passwordSchema } from './form/fields/ValidationSchemas';
 import { convertToISODate, getCurrentDateInFormat } from './SignUpFormHelper';
 import { Preferences } from '@capacitor/preferences';
+import { getUserProfile } from '../../../hooks/queries/useGetUserProfile';
+import { useUserStore } from '../../../assets/store/UserStore';
 
 export const useSignUpForm = () => {
   const signUpMutation = useSignUp();
-
   const navigate = useNavigate();
+  const { setUser } = useUserStore();
 
   const onSubmit = async (values: SignUpInputDto) => {
     const newValues: SignUpInputDto = {
       ...values,
       birthdate: convertToISODate(values.birthdate ?? getCurrentDateInFormat()) ?? new Date().toISOString()
     };
-    const response = await signUpMutation.mutateAsync(newValues);
+    await signUpMutation.mutateAsync(newValues, {
+      onSuccess: async (data) => {
+        await Preferences.set({
+          key: 'token',
+          value: data.data.token
+        });
 
-    await Preferences.set({
-      key: 'token',
-      value: response.data.token
+        const userData = await getUserProfile();
+
+        setUser({ ...userData });
+
+        navigate(RoutesPath.ProfilPicture);
+      }
     });
-
-    navigate(RoutesPath.News);
   };
 
   const steps = [
