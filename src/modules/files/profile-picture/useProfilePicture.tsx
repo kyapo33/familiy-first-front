@@ -7,17 +7,21 @@ import { useUpdateUser } from '../../../hooks/mutations/useUpdateUser';
 import { useQueryClient } from '@tanstack/react-query';
 import { useUserStore } from '../../../assets/store/UserStore';
 
-export const useProfilPicture = () => {
+export const useProfilPicture = (setOpenDialog: React.Dispatch<React.SetStateAction<boolean>>) => {
   const { user, setUser } = useUserStore();
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const [imageSrc, setImageSrc] = useState<string | null>(user?.profilePictureUrl ?? null);
   const [loadingImage, setLoadingImage] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
   const uploadImageMutation = useImageUpload();
-  const navigate = useNavigate();
-  const queryClient = useQueryClient();
-
   const updateUserMutation = useUpdateUser(queryClient);
+
+  const handleClose = () => {
+    setOpenDialog(false);
+    navigate(RoutesPath.FamiliesList);
+  };
 
   const takePicture = async () => {
     setLoadingImage(true);
@@ -51,6 +55,7 @@ export const useProfilPicture = () => {
       setUser({ ...user, profilePictureUrl: response.data.url });
     }
     await updateUserMutation?.mutateAsync({ profilePictureId: response.data.public_id });
+    setOpenDialog(false);
     navigate(RoutesPath.FamiliesList);
   };
 
@@ -60,6 +65,7 @@ export const useProfilPicture = () => {
     takePicture,
     onUpload,
     loading: uploadImageMutation.isPending || loadingImage,
-    uploadError: uploadImageMutation.error
+    uploadError: uploadImageMutation.error,
+    handleClose
   };
 };

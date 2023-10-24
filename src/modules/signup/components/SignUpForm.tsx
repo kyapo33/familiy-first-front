@@ -5,9 +5,10 @@ import MultiStepForm from '../../../components/form/MultiStepForm/MultiStepForm'
 import { Backdrop, CircularProgress } from '@mui/material';
 import CustomSnackbar from '../../../components/snackbar/CustomSnackbar';
 import { FormModeType } from '../../../components/form/MultiStepForm/types';
+import ProfilePicture from '../../files/profile-picture/ProfilePicture';
 
 const SignUpForm: FC = () => {
-  const { onSubmit, steps, initialValues, loading, error } = useSignUpForm();
+  const { onSubmit, steps, initialValues, loading, error, openDialog, setOpenDialog } = useSignUpForm();
 
   return (
     <>
@@ -21,6 +22,7 @@ const SignUpForm: FC = () => {
         mode={FormModeType.SIGNUP}
       />
       <CustomSnackbar isOpen={error?.response?.status === 400} severity="error" message="Cet utilisateur existe déjà" />
+      <ProfilePicture open={openDialog} setOpen={setOpenDialog} />
     </>
   );
 };

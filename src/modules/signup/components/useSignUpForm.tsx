@@ -11,11 +11,13 @@ import { convertToISODate, getCurrentDateInFormat } from './SignUpFormHelper';
 import { Preferences } from '@capacitor/preferences';
 import { getUserProfile } from '../../../hooks/queries/useGetUserProfile';
 import { useUserStore } from '../../../assets/store/UserStore';
+import { useState } from 'react';
 
 export const useSignUpForm = () => {
   const signUpMutation = useSignUp();
   const navigate = useNavigate();
   const { setUser } = useUserStore();
+  const [openDialog, setOpenDialog] = useState<boolean>(false);
 
   const onSubmit = async (values: SignUpInputDto) => {
     const newValues: SignUpInputDto = {
@@ -33,7 +35,7 @@ export const useSignUpForm = () => {
 
         setUser({ ...userData });
 
-        navigate(RoutesPath.ProfilPicture);
+        setOpenDialog(true);
       }
     });
   };
@@ -61,5 +63,13 @@ export const useSignUpForm = () => {
     birthdate: ''
   };
 
-  return { onSubmit, steps, initialValues, loading: signUpMutation.isPending, error: signUpMutation.error };
+  return {
+    onSubmit,
+    steps,
+    initialValues,
+    loading: signUpMutation.isPending,
+    error: signUpMutation.error,
+    openDialog,
+    setOpenDialog
+  };
 };
