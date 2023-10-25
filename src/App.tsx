@@ -30,18 +30,18 @@ const App: FC = () => {
     StatusBar.setBackgroundColor({ color: '#ffffff' });
   }, []);
 
-  const checkUser = useCallback(async () => {
-    const { value } = await Preferences.get({ key: 'user' });
-    if (!value) {
-      return;
-    }
-    const newUser: GetUserModelDto = JSON.parse(value);
-    setUser({ ...newUser });
-  }, [setUser]);
+  // const checkUser = useCallback(async () => {
+  //   const { value } = await Preferences.get({ key: 'user' });
+  //   if (!value) {
+  //     return;
+  //   }
+  //   const newUser: GetUserModelDto = JSON.parse(value);
+  //   setUser({ ...newUser });
+  // }, [setUser]);
 
-  useEffect(() => {
-    checkUser();
-  }, [checkUser]);
+  // useEffect(() => {
+  //   checkUser();
+  // }, [checkUser]);
 
   return (
     <SafeAreaView>
