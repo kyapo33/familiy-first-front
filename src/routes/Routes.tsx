@@ -18,12 +18,12 @@ export const Routes: RouteObject[] = [
     children: []
   },
   {
-    path: RoutesPath.FamiliesList,
+    path: '',
     element: <Families />,
     children: []
   },
   {
-    path: '',
+    path: RoutesPath.Fam,
     element: <Layout />,
     children: [
       {

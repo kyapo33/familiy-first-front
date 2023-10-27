@@ -5,8 +5,6 @@ import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import Preview from './components/Preview';
 import { FC } from 'react';
 import { Backdrop, CircularProgress, Dialog } from '@mui/material';
-import { useNavigate } from 'react-router';
-import { RoutesPath } from '../../../routes/Paths';
 
 interface ProfilePictureProps {
   open: boolean;

@@ -1,4 +1,4 @@
 export enum FormModeType {
-  LOGIN = 'login',
-  SIGNUP = 'signup'
+  SOLO = 'solo',
+  MULTI = 'multi'
 }

@@ -4,7 +4,7 @@ import { GetUserModelDto, UpdateUserInputDto } from '../../schemas/Interfaces';
 import { QueryClient, useMutation } from '@tanstack/react-query';
 import { Preferences } from '@capacitor/preferences';
 
-export const useUpdateUser = (queryClient: QueryClient) => {
+export const useUpdateUser = () => {
   const updateUser = async (data: UpdateUserInputDto) => {
     const { value } = await Preferences.get({ key: 'user' });
     if (!value) {
@@ -20,12 +20,6 @@ export const useUpdateUser = (queryClient: QueryClient) => {
   };
 
   return useMutation<GetUserModelDto, AxiosError, UpdateUserInputDto>({
-    mutationFn: async (data) => await updateUser(data),
-    onMutate: async (data) => {
-      queryClient.setQueryData(['current-user'], (oldData: GetUserModelDto | undefined) => ({
-        ...oldData,
-        ...data
-      }));
-    }
+    mutationFn: async (data) => await updateUser(data)
   });
 };

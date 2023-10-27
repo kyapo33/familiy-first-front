@@ -11,9 +11,16 @@ interface MultiStepFormProps<T> {
   handleSubmit: (values: T) => void;
   steps: Step[];
   mode: FormModeType;
+  submitButtonMessage: string;
 }
 
-const MultiStepForm = <T extends FormikValues>({ initialValues, handleSubmit, steps, mode }: MultiStepFormProps<T>) => {
+const MultiStepForm = <T extends FormikValues>({
+  initialValues,
+  handleSubmit,
+  steps,
+  mode,
+  submitButtonMessage
+}: MultiStepFormProps<T>) => {
   const navigate = useNavigate();
 
   return (
@@ -28,7 +35,7 @@ const MultiStepForm = <T extends FormikValues>({ initialValues, handleSubmit, st
         <Stack component={Container} maxWidth="md">
           {renderComponent()}
           <Box>
-            {mode === FormModeType.SIGNUP && (
+            {mode === FormModeType.MULTI && (
               <Stack flexDirection="row" display="flex" paddingTop="20px" justifyContent="space-between">
                 <IconButton
                   variant="solid"
@@ -46,7 +53,7 @@ const MultiStepForm = <T extends FormikValues>({ initialValues, handleSubmit, st
             {isLastStep && (
               <Stack flexDirection="row" display="flex" paddingTop="20px" justifyContent="center">
                 <Button fullWidth size="md" onClick={handleNext}>
-                  {mode === FormModeType.SIGNUP ? 'Créer mon compte' : 'Se connecter'}
+                  {submitButtonMessage}
                 </Button>
               </Stack>
             )}

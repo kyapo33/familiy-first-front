@@ -26,7 +26,7 @@ export const useLoginForm = () => {
         const userData = await getUserProfile();
 
         setUser({ ...userData });
-        navigate(RoutesPath.FamiliesList);
+        navigate('/');
       }
     });
   };

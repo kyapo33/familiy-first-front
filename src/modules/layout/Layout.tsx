@@ -9,14 +9,6 @@ const Layout: FC = () => {
   const { user } = useUserStore();
   const navigate = useNavigate();
 
-  console.log(user);
-
-  useEffect(() => {
-    if (!user || !user?.id) {
-      navigate(RoutesPath.Login);
-    }
-  }, [navigate, user]);
-
   if (!user || !user?.id) {
     return null;
   }

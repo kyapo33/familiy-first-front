@@ -1,9 +1,7 @@
 import { FC, useCallback, useEffect } from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { Routes as AppRoutes } from './routes/Routes';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { CssVarsProvider, extendTheme } from '@mui/joy';
-
 import '@fontsource/roboto/100.css';
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
@@ -15,12 +13,23 @@ import SafeAreaView from './modules/mobile/safe-area/SafeAreaView';
 import { StatusBar } from '@capacitor/status-bar';
 import { Keyboard } from '@capacitor/keyboard';
 import { Preferences } from '@capacitor/preferences';
-import { GetUserModelDto } from './schemas/Interfaces';
 import { useUserStore } from './assets/store/UserStore';
+import { RoutesPath } from './routes/Paths';
+import { useNavigate } from 'react-router-dom';
+import { getUserProfile } from './hooks/queries/useGetUserProfile';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false // default: true
+    }
+  }
+});
 
 const App: FC = () => {
-  const queryClient = new QueryClient();
-  const { setUser } = useUserStore();
+  const { user, setUser } = useUserStore();
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Configure the status bar when the component mounts
@@ -30,13 +39,14 @@ const App: FC = () => {
   }, []);
 
   const checkUser = useCallback(async () => {
-    const { value } = await Preferences.get({ key: 'user' });
+    const { value } = await Preferences.get({ key: 'token' });
     if (!value) {
+      navigate(RoutesPath.Login);
       return;
     }
-    const newUser: GetUserModelDto = JSON.parse(value);
+    const newUser = await getUserProfile();
     setUser({ ...newUser });
-  }, [setUser]);
+  }, [setUser, navigate]);
 
   useEffect(() => {
     checkUser();
@@ -45,16 +55,15 @@ const App: FC = () => {
   return (
     <SafeAreaView>
       <QueryClientProvider client={queryClient}>
-        <BrowserRouter>
-          <Routes>
-            {AppRoutes.map((route, index: number) => (
-              <Route key={index} path={route.path} element={route.element}>
-                {route.children &&
-                  route.children.map((child, index) => <Route key={index} path={child.path} element={child.element} />)}
-              </Route>
-            ))}
-          </Routes>
-        </BrowserRouter>
+        <ReactQueryDevtools initialIsOpen={false} position="left" />
+        <Routes>
+          {AppRoutes.map((route, index: number) => (
+            <Route key={index} path={route.path} element={route.element}>
+              {route.children &&
+                route.children.map((child, index) => <Route key={index} path={child.path} element={child.element} />)}
+            </Route>
+          ))}
+        </Routes>
       </QueryClientProvider>
     </SafeAreaView>
   );

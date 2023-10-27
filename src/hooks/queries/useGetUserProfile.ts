@@ -8,10 +8,6 @@ const url = 'user/profile';
 
 export const getUserProfile = async () => {
   const response = await makeRequest<GetUserModelDto>(url, 'GET');
-  await Preferences.set({
-    key: 'user',
-    value: JSON.stringify(response.data)
-  });
   return response.data;
 };
 

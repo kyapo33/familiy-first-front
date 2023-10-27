@@ -23,7 +23,8 @@ const SignUpForm: FC = () => {
         initialValues={initialValues}
         handleSubmit={(values) => onSubmit(values)}
         steps={steps}
-        mode={FormModeType.LOGIN}
+        mode={FormModeType.SOLO}
+        submitButtonMessage="Se connecter"
       />
       <CustomSnackbar
         isOpen={error?.response?.status === 401}

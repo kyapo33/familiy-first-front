@@ -1,26 +1,23 @@
 import { Camera, CameraResultType, Photo } from '@capacitor/camera';
 import { useState } from 'react';
 import { useImageUpload } from '../../../hooks/mutations/useImageUpload';
-import { RoutesPath } from '../../../routes/Paths';
 import { useNavigate } from 'react-router';
 import { useUpdateUser } from '../../../hooks/mutations/useUpdateUser';
-import { useQueryClient } from '@tanstack/react-query';
 import { useUserStore } from '../../../assets/store/UserStore';
 
 export const useProfilPicture = (setOpenDialog: React.Dispatch<React.SetStateAction<boolean>>) => {
   const { user, setUser } = useUserStore();
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
 
   const [imageSrc, setImageSrc] = useState<string | null>(user?.profilePictureUrl ?? null);
   const [loadingImage, setLoadingImage] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
   const uploadImageMutation = useImageUpload();
-  const updateUserMutation = useUpdateUser(queryClient);
+  const updateUserMutation = useUpdateUser();
 
   const handleClose = () => {
     setOpenDialog(false);
-    navigate(RoutesPath.FamiliesList);
+    navigate('/');
   };
 
   const takePicture = async () => {
@@ -56,7 +53,7 @@ export const useProfilPicture = (setOpenDialog: React.Dispatch<React.SetStateAct
     }
     await updateUserMutation?.mutateAsync({ profilePictureId: response.data.public_id });
     setOpenDialog(false);
-    navigate(RoutesPath.FamiliesList);
+    navigate('/');
   };
 
   return {

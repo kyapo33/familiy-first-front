@@ -19,7 +19,8 @@ const SignUpForm: FC = () => {
         initialValues={initialValues}
         handleSubmit={(values) => onSubmit(values)}
         steps={steps}
-        mode={FormModeType.SIGNUP}
+        mode={FormModeType.MULTI}
+        submitButtonMessage="Créer mon compte"
       />
       <CustomSnackbar isOpen={error?.response?.status === 400} severity="error" message="Cet utilisateur existe déjà" />
       <ProfilePicture open={openDialog} setOpen={setOpenDialog} />

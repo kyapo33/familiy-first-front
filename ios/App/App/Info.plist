@@ -22,6 +22,12 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>Autorisation d'accéder à l'appareil photo nécessaire pour prendre des photos et des vidéos</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Autorisation d'accéder à la photothèque nécessaire pour ajouter des photos et des vidéos à votre bibliothèque</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Autorisation d'accéder à la photothèque nécessaire pour sélectionner des photos et des vidéos à partager avec l'application</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
